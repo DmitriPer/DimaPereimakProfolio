@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Project {
+  id                String   @id @default(cuid())
+  title             String
+  description       String
+  techStack         Json
+  githubUrl         String
+  liveUrl           String?
+  architectureNotes String
+  category          String
+  createdAt         DateTime @default(now())
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}
