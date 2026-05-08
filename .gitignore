@@ -37,5 +37,6 @@ Thumbs.db
 .ai/
 _bmad/
 _bmad-output/
+docs/
 .github/copilot-instructions.md
 .mcp.json
