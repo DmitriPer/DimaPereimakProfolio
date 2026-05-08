@@ -4,6 +4,6 @@
     "buildCommand": "npm install && (cd apps/backend && npx prisma generate) && npm run build --workspace=apps/backend"
   },
   "deploy": {
-    "startCommand": "node apps/backend/dist/main"
+    "startCommand": "cd apps/backend && node dist/main"
   }
 }
