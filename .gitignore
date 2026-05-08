@@ -8,9 +8,6 @@ build/
 .nuxt/
 out/
 
-# Prisma generated client
-apps/backend/generated/
-
 # Environment
 .env
 .env.local
