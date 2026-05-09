@@ -1,5 +1,7 @@
 {
+  "include": ["src"],
   "compilerOptions": {
+    "rootDir": "src",
     "strict": true,
     "module": "nodenext",
     "moduleResolution": "nodenext",
