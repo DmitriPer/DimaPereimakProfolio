@@ -1,9 +1,3 @@
 {
-  "$schema": "https://railway.com/railway.schema.json",
-  "build": {
-    "buildCommand": "npm install --include=dev && npm run build --workspace=apps/backend"
-  },
-  "deploy": {
-    "startCommand": "cd apps/backend && npx prisma migrate deploy && node dist/main"
-  }
+  "$schema": "https://railway.com/railway.schema.json"
 }
