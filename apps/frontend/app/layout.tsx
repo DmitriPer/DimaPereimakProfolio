@@ -22,7 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="dark" className={inter.variable}>
-      <body>{children}</body>
+      <body>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+        {children}
+      </body>
     </html>
   );
 }
