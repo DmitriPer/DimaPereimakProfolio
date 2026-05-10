@@ -150,6 +150,20 @@ Any string works as a custom agent type.
 npm run build && npm test
 ```
 
+## Test Structure
+
+Story structural tests (source-file string checks) live in the same project as the code they test:
+
+| What is tested | Where to put the spec |
+|---|---|
+| `apps/frontend` source files | `apps/frontend/tests/story-X-Y.spec.ts` |
+| `apps/backend` source files | `apps/backend/tests/story-X-Y.spec.ts` |
+| NestJS unit tests (service, controller) | Co-located in `apps/backend/src/` (NestJS convention) |
+| `packages/types` | `packages/types/src/index.test.ts` |
+
+Each story spec is named `story-X-Y.spec.ts` matching its story number.
+The `const root = join(__dirname, '../')` always resolves to the package root.
+
 ## CLI Quick Reference
 
 ```bash
