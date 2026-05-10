@@ -10,6 +10,8 @@ describe('Story 2.3 — ThemeToggle and NavObserver', () => {
   let navbarSrc: string;
   let navbarCss: string;
   let layoutSrc: string;
+  let sunIconSrc: string;
+  let moonIconSrc: string;
 
   beforeAll(() => {
     toggleSrc = read('app/components/ThemeToggle.tsx');
@@ -17,6 +19,8 @@ describe('Story 2.3 — ThemeToggle and NavObserver', () => {
     navbarSrc = read('app/components/NavBar.tsx');
     navbarCss = read('app/components/NavBar.module.css');
     layoutSrc = read('app/layout.tsx');
+    sunIconSrc = read('app/components/icons/SunIcon.tsx');
+    moonIconSrc = read('app/components/icons/MoonIcon.tsx');
   });
 
   describe('layout — flash prevention', () => {
@@ -67,9 +71,19 @@ describe('Story 2.3 — ThemeToggle and NavObserver', () => {
       expect(toggleSrc).toContain('Switch to light mode');
     });
 
-    it('uses SVG icons with aria-hidden', () => {
-      expect(toggleSrc).toContain('aria-hidden="true"');
-      expect(toggleSrc).toContain('<svg');
+    it('imports SunIcon and MoonIcon from icons/', () => {
+      expect(toggleSrc).toContain("from './icons/SunIcon'");
+      expect(toggleSrc).toContain("from './icons/MoonIcon'");
+    });
+
+    it('SunIcon has aria-hidden="true" on svg', () => {
+      expect(sunIconSrc).toContain('aria-hidden="true"');
+      expect(sunIconSrc).toContain('<svg');
+    });
+
+    it('MoonIcon has aria-hidden="true" on svg', () => {
+      expect(moonIconSrc).toContain('aria-hidden="true"');
+      expect(moonIconSrc).toContain('<svg');
     });
   });
 

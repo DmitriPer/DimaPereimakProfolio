@@ -35,7 +35,7 @@ export default function ThemeToggle() {
   // Render a same-size empty button until localStorage is read.
   // Both server and client render this — no hydration mismatch, no wrong icon.
   if (!mounted) {
-    return <button type="button" className={styles.toggle} aria-label="Toggle theme" />;
+    return <button type="button" className={styles.toggle} aria-label="Toggle theme" disabled />;
   }
 
   return (
