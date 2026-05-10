@@ -5,6 +5,7 @@ const frontendRoot = join(__dirname, '../../../apps/frontend');
 const layoutSource = () => readFileSync(join(frontendRoot, 'app/layout.tsx'), 'utf-8');
 const pageSource = () => readFileSync(join(frontendRoot, 'app/page.tsx'), 'utf-8');
 const globalsCss = () => readFileSync(join(frontendRoot, 'app/globals.css'), 'utf-8');
+const variablesScss = () => readFileSync(join(frontendRoot, 'styles/_variables.scss'), 'utf-8');
 
 describe('Story 2.1 — Page Structure and Skip Link', () => {
   describe('skip link in layout', () => {
@@ -68,8 +69,21 @@ describe('Story 2.1 — Page Structure and Skip Link', () => {
   });
 
   describe('dark theme default', () => {
-    it('layout sets data-theme="dark" on <html> server-side', () => {
-      expect(layoutSource()).toContain('data-theme="dark"');
+    it('_variables.scss defines dark tokens via @media (prefers-color-scheme: dark)', () => {
+      expect(variablesScss()).toContain('prefers-color-scheme: dark');
+    });
+
+    it('_variables.scss defines dark tokens via [data-theme="dark"] attribute selector', () => {
+      expect(variablesScss()).toContain('[data-theme="dark"]');
+    });
+
+    it('layout has suppressHydrationWarning on <html> for theme flash prevention', () => {
+      expect(layoutSource()).toContain('suppressHydrationWarning');
+    });
+
+    it('layout runs inline script to restore stored theme before hydration', () => {
+      expect(layoutSource()).toContain("localStorage.getItem('theme')");
+      expect(layoutSource()).toContain("setAttribute('data-theme'");
     });
   });
 });

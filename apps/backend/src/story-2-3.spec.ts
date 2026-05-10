@@ -5,102 +5,129 @@ const frontendRoot = join(__dirname, '../../../apps/frontend');
 const read = (rel: string) => readFileSync(join(frontendRoot, rel), 'utf-8');
 
 describe('Story 2.3 — ThemeToggle and NavObserver', () => {
+  let toggleSrc: string;
+  let observerSrc: string;
+  let navbarSrc: string;
+  let navbarCss: string;
+  let layoutSrc: string;
+
+  beforeAll(() => {
+    toggleSrc = read('app/components/ThemeToggle.tsx');
+    observerSrc = read('app/components/NavObserver.tsx');
+    navbarSrc = read('app/components/NavBar.tsx');
+    navbarCss = read('app/components/NavBar.module.css');
+    layoutSrc = read('app/layout.tsx');
+  });
+
+  describe('layout — flash prevention', () => {
+    it('html element has suppressHydrationWarning', () => {
+      expect(layoutSrc).toContain('suppressHydrationWarning');
+    });
+
+    it('inline script reads localStorage theme', () => {
+      expect(layoutSrc).toContain("localStorage.getItem('theme')");
+    });
+
+    it('inline script sets data-theme on documentElement', () => {
+      expect(layoutSrc).toContain("setAttribute('data-theme'");
+    });
+  });
+
   describe('ThemeToggle — client directive', () => {
     it('has "use client" directive', () => {
-      expect(read('app/components/ThemeToggle.tsx')).toContain("'use client'");
+      expect(toggleSrc).toContain("'use client'");
     });
   });
 
   describe('ThemeToggle — theme toggle', () => {
     it('sets data-theme attribute on documentElement', () => {
-      expect(read('app/components/ThemeToggle.tsx')).toContain('setAttribute');
-      expect(read('app/components/ThemeToggle.tsx')).toContain('data-theme');
+      expect(toggleSrc).toContain('setAttribute');
+      expect(toggleSrc).toContain('data-theme');
     });
 
     it('persists theme to localStorage', () => {
-      expect(read('app/components/ThemeToggle.tsx')).toContain('localStorage.setItem');
+      expect(toggleSrc).toContain('localStorage.setItem');
     });
 
     it('reads theme from localStorage on mount', () => {
-      expect(read('app/components/ThemeToggle.tsx')).toContain('localStorage.getItem');
+      expect(toggleSrc).toContain('localStorage.getItem');
     });
 
     it('falls back to prefers-color-scheme', () => {
-      expect(read('app/components/ThemeToggle.tsx')).toContain('prefers-color-scheme');
+      expect(toggleSrc).toContain('prefers-color-scheme');
     });
   });
 
   describe('ThemeToggle — accessibility', () => {
     it('has aria-label "Switch to dark mode" branch', () => {
-      expect(read('app/components/ThemeToggle.tsx')).toContain('Switch to dark mode');
+      expect(toggleSrc).toContain('Switch to dark mode');
     });
 
     it('has aria-label "Switch to light mode" branch', () => {
-      expect(read('app/components/ThemeToggle.tsx')).toContain('Switch to light mode');
+      expect(toggleSrc).toContain('Switch to light mode');
     });
 
-    it('icon span has aria-hidden="true"', () => {
-      expect(read('app/components/ThemeToggle.tsx')).toContain('aria-hidden="true"');
+    it('uses SVG icons with aria-hidden', () => {
+      expect(toggleSrc).toContain('aria-hidden="true"');
+      expect(toggleSrc).toContain('<svg');
     });
   });
 
   describe('NavObserver — client directive', () => {
     it('has "use client" directive', () => {
-      expect(read('app/components/NavObserver.tsx')).toContain("'use client'");
+      expect(observerSrc).toContain("'use client'");
     });
   });
 
   describe('NavObserver — IntersectionObserver', () => {
-    it('creates IntersectionObserver', () => {
-      expect(read('app/components/NavObserver.tsx')).toContain('IntersectionObserver');
-    });
-
-    it('sets up observer inside useEffect', () => {
-      const src = read('app/components/NavObserver.tsx');
-      expect(src).toContain('useEffect');
-      expect(src).toContain('IntersectionObserver');
+    it('creates IntersectionObserver inside useEffect', () => {
+      expect(observerSrc).toContain('useEffect');
+      expect(observerSrc).toContain('IntersectionObserver');
     });
 
     it('calls observer.disconnect() on cleanup', () => {
-      expect(read('app/components/NavObserver.tsx')).toContain('observer.disconnect()');
+      expect(observerSrc).toContain('observer.disconnect()');
+    });
+
+    it('tracks intersecting sections with a Set', () => {
+      expect(observerSrc).toContain('new Set');
     });
 
     it('adds active class to matching nav link', () => {
-      expect(read('app/components/NavObserver.tsx')).toContain("'active'");
+      expect(observerSrc).toContain("'active'");
     });
 
     it('renders null', () => {
-      expect(read('app/components/NavObserver.tsx')).toContain('return null');
+      expect(observerSrc).toContain('return null');
     });
   });
 
   describe('NavBar — still a server component', () => {
     it('NavBar has no "use client" directive', () => {
-      const src = read('app/components/NavBar.tsx');
-      expect(src).not.toContain("'use client'");
-      expect(src).not.toContain('"use client"');
+      expect(navbarSrc).not.toContain("'use client'");
+      expect(navbarSrc).not.toContain('"use client"');
     });
 
     it('NavBar imports ThemeToggle', () => {
-      expect(read('app/components/NavBar.tsx')).toContain("from './ThemeToggle'");
+      expect(navbarSrc).toContain("from './ThemeToggle'");
     });
 
     it('NavBar imports NavObserver', () => {
-      expect(read('app/components/NavBar.tsx')).toContain("from './NavObserver'");
+      expect(navbarSrc).toContain("from './NavObserver'");
     });
 
     it('NavBar renders ThemeToggle', () => {
-      expect(read('app/components/NavBar.tsx')).toContain('<ThemeToggle');
+      expect(navbarSrc).toContain('<ThemeToggle');
     });
 
     it('NavBar renders NavObserver', () => {
-      expect(read('app/components/NavBar.tsx')).toContain('<NavObserver');
+      expect(navbarSrc).toContain('<NavObserver');
     });
   });
 
   describe('NavBar.module.css — active link style', () => {
     it('has :global(a.active) rule for active nav links', () => {
-      expect(read('app/components/NavBar.module.css')).toContain('a.active');
+      expect(navbarCss).toContain('a.active');
     });
   });
 });
