@@ -9,7 +9,9 @@ export default function Home() {
       </header>
       <main id="main-content">
         <HeroSection />
-        <section id="projects"></section>
+        <section id="projects" aria-labelledby="projects-heading">
+          <h2 id="projects-heading">Projects</h2>
+        </section>
         <section id="about"></section>
         <section id="contact"></section>
       </main>
