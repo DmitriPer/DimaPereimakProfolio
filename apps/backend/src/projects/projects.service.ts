@@ -10,7 +10,7 @@ export class ProjectsService {
     const rows = await this.prisma.project.findMany({
       orderBy: { createdAt: 'desc' },
     });
-    return rows.map(row => ({
+    return rows.map((row) => ({
       ...row,
       techStack: row.techStack as string[],
       liveUrl: row.liveUrl ?? undefined,
