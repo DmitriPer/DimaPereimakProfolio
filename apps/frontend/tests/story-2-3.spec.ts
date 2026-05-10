@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-const frontendRoot = join(__dirname, '../../../apps/frontend');
+const frontendRoot = join(__dirname, '../');
 const read = (rel: string) => readFileSync(join(frontendRoot, rel), 'utf-8');
 
 describe('Story 2.3 — ThemeToggle and NavObserver', () => {

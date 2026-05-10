@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
-const frontendRoot = join(__dirname, '../../../apps/frontend');
+const frontendRoot = join(__dirname, '../');
 const navbarSource = () => readFileSync(join(frontendRoot, 'app/components/NavBar.tsx'), 'utf-8');
 const navbarCss = () => readFileSync(join(frontendRoot, 'app/components/NavBar.module.css'), 'utf-8');
 const pageSource = () => readFileSync(join(frontendRoot, 'app/page.tsx'), 'utf-8');

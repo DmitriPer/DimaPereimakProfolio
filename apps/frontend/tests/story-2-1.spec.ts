@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-const frontendRoot = join(__dirname, '../../../apps/frontend');
+const frontendRoot = join(__dirname, '../');
 const read = (rel: string) => readFileSync(join(frontendRoot, rel), 'utf-8');
 
 describe('Story 2.1 — Page Structure and Skip Link', () => {
@@ -16,6 +16,7 @@ describe('Story 2.1 — Page Structure and Skip Link', () => {
     globalsCss = read('app/globals.css');
     variablesScss = read('styles/_variables.scss');
   });
+
   describe('skip link in layout', () => {
     it('layout contains skip link pointing to #main-content', () => {
       expect(layoutSource).toContain('href="#main-content"');

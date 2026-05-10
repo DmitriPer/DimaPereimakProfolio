@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
+    "typecheck": "tsc --noEmit",
     "postinstall": "prisma generate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -66,7 +67,8 @@
     ],
     "rootDir": ".",
     "roots": [
-      "<rootDir>/src"
+      "<rootDir>/src",
+      "<rootDir>/tests"
     ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
