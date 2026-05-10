@@ -33,35 +33,35 @@ const MoonIcon = () => (
 );
 
 export default function ThemeToggle() {
-  // Lazy initializer: reads localStorage immediately on the client so the
-  // correct icon is rendered on React's first pass — no useEffect flash.
-  // Returns 'dark' on the server where localStorage is unavailable.
-  const [theme, setTheme] = useState<Theme>(() =>
-    typeof window === 'undefined' ? 'dark' : resolveTheme()
-  );
+  const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState<Theme>('dark');
 
-  // Keep data-theme on <html> in sync with state. The inline script in
-  // layout.tsx already seeds the correct value before hydration; this
-  // effect handles post-toggle updates.
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+    const resolved = resolveTheme();
+    setTheme(resolved);
+    document.documentElement.setAttribute('data-theme', resolved);
+    setMounted(true);
+  }, []);
 
   function handleToggle() {
     const next: Theme = theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
+    document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
   }
 
+  // Render a same-size empty button until localStorage is read.
+  // Both server and client render this — no hydration mismatch, no wrong icon.
+  if (!mounted) {
+    return <button type="button" className={styles.toggle} aria-label="Toggle theme" />;
+  }
+
   return (
-    // suppressHydrationWarning: server renders 'dark' default; client may
-    // immediately resolve a different stored preference — mismatch is expected.
     <button
       type="button"
       onClick={handleToggle}
       aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
       className={styles.toggle}
-      suppressHydrationWarning
     >
       {theme === 'light' ? <SunIcon /> : <MoonIcon />}
     </button>
