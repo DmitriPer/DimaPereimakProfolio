@@ -2,6 +2,8 @@ $bp-md: 640px;
 $bp-lg: 1024px;
 
 :root {
+  --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+
   --color-bg: #ffffff;
   --color-bg-subtle: #f8f9fa;
   --color-text: #111111;

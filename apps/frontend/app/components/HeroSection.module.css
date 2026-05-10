@@ -1,0 +1,101 @@
+.hero {
+  padding-inline: clamp(1.5rem, 5vw, 4rem);
+  /* top padding clears the sticky nav (~4rem) plus breathing room */
+  padding-top: clamp(5rem, 12vw, 8rem);
+  padding-bottom: clamp(4rem, 8vw, 6rem);
+}
+
+.content {
+  max-width: 56rem;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+}
+
+.headline {
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.375rem);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  max-width: 44rem;
+  margin-bottom: 2.5rem;
+}
+
+.ctaGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.ctaPrimary {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ctaPrimary {
+    transition: background-color 0.15s;
+  }
+}
+
+.ctaPrimary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.ctaSecondary {
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ctaSecondary {
+    transition: border-color 0.15s, color 0.15s;
+  }
+}
+
+.ctaSecondary:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.ctaPrimary:focus-visible,
+.ctaSecondary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Mobile (<640px = $bp-md): CTAs stack full-width */
+@media (max-width: 639px) {
+  .ctaGroup {
+    flex-direction: column;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+  }
+}
