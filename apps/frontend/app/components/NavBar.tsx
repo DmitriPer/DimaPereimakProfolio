@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import ThemeToggle from './ThemeToggle';
+import NavObserver from './NavObserver';
 import styles from './NavBar.module.css';
 
 export default function NavBar() {
@@ -12,14 +14,18 @@ export default function NavBar() {
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <a
-        href="/cv.pdf"
-        className={styles.cvLink}
-        aria-label="Download CV as PDF"
-        download
-      >
-        Download CV
-      </a>
+      <div className={styles.actions}>
+        <a
+          href="/cv.pdf"
+          className={styles.cvLink}
+          aria-label="Download CV as PDF"
+          download
+        >
+          Download CV
+        </a>
+        <ThemeToggle />
+      </div>
+      <NavObserver />
     </nav>
   );
 }
