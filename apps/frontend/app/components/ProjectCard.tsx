@@ -15,8 +15,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       <h3 className={styles.title}>{title}</h3>
       <p className={styles.description}>{description}</p>
       <ul className={styles.techStack} aria-label="Tech stack">
-        {techStack.map((tech) => (
-          <li key={tech} className={styles.tech}>
+        {techStack.map((tech, i) => (
+          <li key={`${tech}-${i}`} className={styles.tech}>
             {tech}
           </li>
         ))}

@@ -49,6 +49,10 @@ describe('Story 3.3 — ProjectCard Component', () => {
       expect(cardSrc).toContain('techStack');
       expect(cardSrc).toContain('.map(');
     });
+
+    it('uses index-based key to avoid duplicate-name React warnings', () => {
+      expect(cardSrc).toMatch(/key=\{`\$\{tech\}-\$\{i\}`\}/);
+    });
   });
 
   describe('architecture accordion — FR12, UX-DR6', () => {
